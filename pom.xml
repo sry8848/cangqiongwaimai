@@ -49,6 +49,16 @@
                 <version>${lombok}</version> <!-- 推荐最新稳定版 -->
             </dependency>
 
+<!--            阿里云oss-->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>3.10.2</version>
+            </dependency>
+<!--TODO 继续引入阿里云oss依赖-->
+
+
+
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
