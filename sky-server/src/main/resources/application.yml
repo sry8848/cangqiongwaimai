@@ -12,6 +12,14 @@ spring:
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    host: ${sky.redis.host}
+    port: ${sky.redis.port}
+    password: ${sky.redis.password}
+    database: ${sky.redis.database}
 
 mybatis:
   #mapper配置文件
@@ -37,3 +45,9 @@ sky:
     admin-ttl: 180000000000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+
+  alioss:
+    endpoint: ${sky.alioss.endpoint}  # 根据实际创建的地域填写
+    access-key-id: ${sky.alioss.access-key-id}     # 替换为你的AccessKey ID
+    access-key-secret: ${sky.alioss.access-key-secret}  # 替换为你的AccessKey Secret
+    bucket-name: ${sky.alioss.bucket-name}          # 替换为你的Bucket名称

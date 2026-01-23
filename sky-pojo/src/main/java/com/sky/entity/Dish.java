@@ -39,6 +39,7 @@ public class Dish implements Serializable {
     //0 停售 1 起售
     private Integer status;
 
+    //TODO 时间显示格式未设置
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
