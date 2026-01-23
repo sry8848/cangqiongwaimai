@@ -6,3 +6,13 @@ sky:
     database: sky_take_out
     username: root
     password: Gjz_13144
+  alioss:
+    endpoint: oss-cn-beijing.aliyuncs.com  # 根据实际创建的地域填写
+    access-key-id: ${ALIOSS_ACCESS_KEY_ID}      # 替换为你的AccessKey ID
+    access-key-secret: ${ALIOSS_ACCESS_KEY_SECRET}
+    bucket-name: ${ALIOSS_BUCKET_NAME}       # 替换为你的Bucket名称
+  redis:
+    host: localhost
+    port: 6379
+    password: 123456
+    databases: 0

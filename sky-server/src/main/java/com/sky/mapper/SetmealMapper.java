@@ -11,6 +11,7 @@ public interface SetmealMapper {
      * @param id
      * @return
      */
+    //TODO 未选择架构
     @Select("select count(id) from setmeal where category_id = #{categoryId}")
     Integer countByCategoryId(Long id);
 
