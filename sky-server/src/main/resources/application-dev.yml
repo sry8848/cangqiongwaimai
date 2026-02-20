@@ -9,10 +9,24 @@ sky:
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com  # 根据实际创建的地域填写
     access-key-id: ${ALIOSS_ACCESS_KEY_ID}      # 替换为你的AccessKey ID
-    access-key-secret: ${ALIOSS_ACCESS_KEY_SECRET}
+    access-key-secret:  ${ALIOSS_ACCESS_KEY_SECRET}
     bucket-name: ${ALIOSS_BUCKET_NAME}       # 替换为你的Bucket名称
   redis:
     host: localhost
     port: 6379
     password: 123456
-    databases: 0
+    database: 0
+  wechat:
+    appid: ${WECHAT_APP_ID}
+    secret: ${WECHAT_APP_SECRET}
+    mchid: xxxxxx  # 商户号
+    mchSerialNo: xxxxxx # 商户API证书的证书序列号
+    privateKeyFilePath: xxxxxx # 商户私钥文件路径
+    apiV3Key: xxxxxx # APIv3密钥
+    wechatPayCertFilePath: xxxxxx # 微信支付平台证书文件路径
+    notifyUrl: xxxxxx # 微信支付结果回调地址
+    mchCertSerialNo: xxxxxx # 商户证书序列号
+  shop:
+    address: 福建省漳州市龙海区顺德五香卤面（总店）
+  baidu:
+    ak: MOK4IqU6HCmWFmRNCABwnNmG4djc7UpG

@@ -46,8 +46,16 @@ sky:
     # 设置前端传递过来的令牌名称
     admin-token-name: token
 
-  alioss:
-    endpoint: ${sky.alioss.endpoint}  # 根据实际创建的地域填写
-    access-key-id: ${sky.alioss.access-key-id}     # 替换为你的AccessKey ID
-    access-key-secret: ${sky.alioss.access-key-secret}  # 替换为你的AccessKey Secret
-    bucket-name: ${sky.alioss.bucket-name}          # 替换为你的Bucket名称
+    user-secret-key: itheima
+    user-ttl: 180000000000
+    user-token-name: authentication
+
+#  alioss:
+#    endpoint: ${sky.alioss.endpoint}  # 根据实际创建的地域填写
+#    access-key-id: ${sky.alioss.access-key-id}     # 替换为你的AccessKey ID
+#    access-key-secret: ${sky.alioss.access-key-secret}  # 替换为你的AccessKey Secret
+#    bucket-name: ${sky.alioss.bucket-name}          # 替换为你的Bucket名称
+#
+#  wechat:
+#    appid: ${sky.wechat.app-id}
+#    secret: ${sky.wechat.app-secret}
