@@ -48,10 +48,18 @@ public interface DishService {
      */
     DishDTO getByIdWithFlavor(Long id);
 
+
     /**
-     * 条件查询菜品和口味
-     * @param  categoryId
+     * 根据分类id查询菜品(管理端）
+     * @param categoryId
      * @return
      */
-    List<DishVO> listWithFlavor(long categoryId);
+    List<Dish> list(Long categoryId);
+
+    /**
+     * 根据分类id查询菜品(用户端)
+     * @param categoryId
+     * @return
+     */
+    List<DishVO> listWithFlavor(Long categoryId);
 }

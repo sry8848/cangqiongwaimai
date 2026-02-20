@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.OrderMapper">
+
+
+    <insert id="insert" parameterType="Orders" useGeneratedKeys="true" keyProperty="id"> insert into orders
+     (number, status, user_id, address_book_id, order_time, checkout_time, pay_method, pay_status, amount, remark, phone, address, consignee, estimated_delivery_time, delivery_status, pack_amount, tableware_number, tableware_status)
+      values
+     (#{number}, #{status}, #{userId}, #{addressBookId}, #{orderTime}, #{checkoutTime}, #{payMethod}, #{payStatus}, #{amount}, #{remark}, #{phone}, #{address}, #{consignee},
+      #{estimatedDeliveryTime}, #{deliveryStatus}, #{packAmount}, #{tablewareNumber}, #{tablewareStatus}) </insert>
+
+    <insert id="insertOrderDetailBatch" parameterType="orderDetail" >
+        insert into order_detail (order_id, dish_id, setmeal_id, name, image, dish_flavor, number, amount)
+        values
+        <foreach collection="orderDetails" item="orderDetail" separator=",">
+            (#{orderDetail.orderId}, #{orderDetail.dishId}, #{orderDetail.setmealId}, #{orderDetail.name}, #{orderDetail.image}, #{orderDetail.dishFlavor}, #{orderDetail.number}, #{orderDetail.amount})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.sky.entity.Orders">
+        update orders
+        <set>
+            <if test="cancelReason != null and cancelReason!='' "> cancel_reason=#{cancelReason}, </if>
+            <if test="rejectionReason != null and rejectionReason!='' "> rejection_reason=#{rejectionReason}, </if>
+            <if test="cancelTime != null"> cancel_time=#{cancelTime}, </if>
+            <if test="payStatus != null"> pay_status=#{payStatus}, </if>
+            <if test="payMethod != null"> pay_method=#{payMethod}, </if>
+            <if test="checkoutTime != null"> checkout_time=#{checkoutTime}, </if>
+            <if test="status != null"> status = #{status}, </if>
+            <if test="deliveryTime != null"> delivery_time = #{deliveryTime} </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 分页查询订单 -->
+    <select id="pageQuery" resultType="com.sky.entity.Orders" parameterType="com.sky.dto.OrdersPageQueryDTO">
+        select * from orders
+        <where>
+            <if test="number != null and number != ''">
+                and number like concat('%', #{number}, '%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone like concat('%', #{phone}, '%')
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="beginTime != null">
+                and order_time &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null">
+                and order_time &lt;= #{endTime}
+            </if>
+        </where>
+        order by order_time desc
+    </select>
+
+    <!-- 统计各个状态的订单数量 -->
+    <select id="getOrderStatistics" resultType="com.sky.vo.OrderStatisticsVO">
+        SELECT
+            SUM(CASE WHEN status = 2 THEN 1 ELSE 0 END) AS toBeConfirmed,
+            SUM(CASE WHEN status = 3 THEN 1 ELSE 0 END) AS confirmed,
+            SUM(CASE WHEN status = 4 THEN 1 ELSE 0 END) AS deliveryInProgress
+        FROM orders
+    </select>
+</mapper>

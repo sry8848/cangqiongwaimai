@@ -178,53 +178,76 @@ public class DishServiceImpl implements DishService {
     }
 
     /**
-     * 条件查询菜品和口味
+     * 根据分类id查询菜品（用户端 - C端）
+     * 1. 需要缓存
+     * 2. 需要返回口味数据 (DishVO)
      * @param categoryId
      * @return
      */
-    public List<DishVO> listWithFlavor(long categoryId) {
+    public List<DishVO> listWithFlavor(Long categoryId) {
+        // 1. 构造 Redis Key
+        String key = "dish_" + categoryId;
 
-        //查询缓存是否存在
-        String key="dish_"+categoryId;
-
+        // 2. 查询缓存
         ValueOperations valueOperations = redisTemplate.opsForValue();
+        // 这里强转 List<DishVO>，因为缓存里存的是带口味的数据
         List<DishVO> dishVOList = (List<DishVO>) valueOperations.get(key);
 
-        //缓存存在
-        if(dishVOList!=null){
+        // 3. 缓存命中，直接返回
+        if (dishVOList != null && !dishVOList.isEmpty()) {
             return dishVOList;
         }
 
-        //缓存不存在
-        Dish dish = Dish.builder().
-                categoryId(categoryId)
-                .status(StatusConstant.ENABLE)
+        // 4. 缓存未命中，查询数据库
+        Dish dish = Dish.builder()
+                .categoryId(categoryId)
+                .status(StatusConstant.ENABLE) // 用户端只能查起售的
                 .build();
 
+        // 4.1 先查菜品基本信息
         List<Dish> dishList = dishMapper.list(dish);
 
         dishVOList = new ArrayList<>();
 
+        // 4.2 组装口味数据 (这一步是为了把 Dish 转为 DishVO)
         for (Dish d : dishList) {
             DishVO dishVO = new DishVO();
-            BeanUtils.copyProperties(d,dishVO);
+            BeanUtils.copyProperties(d, dishVO);
 
-            //根据菜品id查询对应的口味
+            // 根据菜品id查询对应的口味
             List<DishFlavor> flavors = dishFlavorMapper.getByDishId(d.getId());
-
             dishVO.setFlavors(flavors);
+
             dishVOList.add(dishVO);
         }
 
-        //防止缓存穿透
-        if(dishList.isEmpty()){
-            valueOperations.set(key,new ArrayList<>(),60+(new Random().nextInt(10)), TimeUnit.MINUTES);
-        }
-        else{
-            valueOperations.set(key,dishVOList,60+(new Random().nextInt(10)),TimeUnit.MINUTES);
+        // 5. 将结果写入缓存
+        // 防止缓存穿透：如果查询结果为空，也缓存一个空集合，但过期时间短一点
+        if (dishVOList.isEmpty()) {
+            // 空数据缓存 5 分钟 (防止短时间内大量请求打到数据库)
+            valueOperations.set(key, new ArrayList<>(), 5, TimeUnit.MINUTES);
+        } else {
+            // 正常数据缓存 60 分钟 + 随机时间 (防止缓存雪崩)
+            valueOperations.set(key, dishVOList, 60 + (new Random().nextInt(10)), TimeUnit.MINUTES);
         }
 
         return dishVOList;
     }
 
+    /**
+     * 根据分类id查询菜品（管理端 - B端）
+     * 1. 不需要缓存 (保证数据实时性)
+     * 2. 只需要基本信息 (Dish) 用于新增套餐时的列表展示
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> list(Long categoryId) {
+        Dish dish = Dish.builder()
+                .categoryId(categoryId)
+                .status(StatusConstant.ENABLE) // 管理端新增套餐时，也只能选起售的菜
+                .build();
+        return dishMapper.list(dish);
+    }
 }
+
