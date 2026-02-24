@@ -67,4 +67,50 @@
             SUM(CASE WHEN status = 4 THEN 1 ELSE 0 END) AS deliveryInProgress
         FROM orders
     </select>
+
+    <select id="getTurnoverStatistics" resultType="com.sky.dto.TurnoverStatDTO">
+        select
+        date(order_time) AS date,<!-- 使用date将时分秒忽略 -->
+        sum(amount) AS amount
+        from orders
+        <where>
+            <if test="begin != null">
+                and order_time &gt;= #{begin}
+            </if>
+            <if test="end != null">
+                and order_time &lt;= #{end}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            group by date(order_time)
+        </where>
+    </select>
+
+    <select id="countByMap" resultType="java.lang.Integer">
+        select count(id) from orders
+        <where>
+            <if test="begin != null">
+                and order_time &gt;= #{begin}
+            </if>
+            <if test="end != null">
+                and order_time &lt;= #{end}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="getSalesTop10" resultType="com.sky.dto.GoodsSalesDTO">
+        select od.name, sum(od.number) as number
+        from order_detail od
+        join orders o on od.order_id = o.id
+        where o.order_time &gt;= #{begin}
+          and o.order_time &lt;= #{end}
+          and o.status = 5
+        group by od.name
+        order by number desc
+        limit 10
+    </select>
 </mapper>

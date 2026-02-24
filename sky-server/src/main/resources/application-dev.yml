@@ -30,3 +30,16 @@ sky:
     address: 福建省漳州市龙海区顺德五香卤面（总店）
   baidu:
     ak: MOK4IqU6HCmWFmRNCABwnNmG4djc7UpG
+  rabbitmq:
+    host: localhost        # RabbitMQ 服务器地址
+    port: 5672             # 默认端口
+    username: guest        # 用户名 (生产环境请务必修改)
+    password: guest        # 密码
+    virtual-host: /        # 虚拟主机 (隔离环境)
+    # 可选配置：开启发送确认机制，确保消息到达交换机
+    publisher-confirm-type: correlated
+    # 可选配置：开启发送返回机制，确保消息路由到队列
+    publisher-returns: true
+    listener:
+      # 可选配置：设置同一时刻最多投递给消费者一条消息
+     prefetch: 1 #每次只能获取一条消息，处理完成后才能获取下一个消息

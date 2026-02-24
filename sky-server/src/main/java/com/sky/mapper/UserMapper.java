@@ -1,8 +1,11 @@
 package com.sky.mapper;
 
+import com.sky.dto.UserStatDTO;
 import com.sky.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -25,4 +28,19 @@ public interface UserMapper {
      * @return
      */
     User getById(Long id);
+
+    /**
+     * 根据时间范围统计每天用户数量
+     * @param  start
+     * @param  end
+     * @return
+     */
+    List<UserStatDTO> getDateCountByDateRange(LocalDateTime start, LocalDateTime end);
+
+    /**
+     * 查询某日前用户总数
+     * @param begin
+     * @return
+     */
+    Long countBeforeDate(LocalDateTime begin);
 }

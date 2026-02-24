@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCountDTO implements Serializable {
+public class UserStatDTO implements Serializable {
 
     // 对应 SQL 里的 DATE(create_time) AS date
     private LocalDate date;

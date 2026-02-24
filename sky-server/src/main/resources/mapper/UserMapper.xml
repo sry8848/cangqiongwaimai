@@ -40,4 +40,17 @@
             where id = #{id}
         </if>
     </select>
+
+    <select id="getDateCountByDateRange" resultType="com.sky.dto.UserStatDTO">
+        select DATE(create_time) as date, count(id) as count from user
+        <where>
+            <if test="begin != null"> and create_time &gt;= #{begin} </if><!-- 这里用date即对参数使用函数会导致索引失效 -->
+            <if test="end != null"> and create_time &lt;= #{end} </if>
+        </where>
+        group by DATE(create_time)<!-- 忽略时分秒 -->
+    </select>
+
+    <select id="countBeforeDate" resultType="java.lang.Long">
+        SELECT COUNT(id) FROM user WHERE create_time &lt; #{time}
+    </select>
 </mapper>

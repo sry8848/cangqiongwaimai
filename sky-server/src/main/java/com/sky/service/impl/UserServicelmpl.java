@@ -3,6 +3,7 @@ package com.sky.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sky.constant.MessageConstant;
+import com.sky.constant.RedisConstant;
 import com.sky.dto.UserLoginDTO;
 import com.sky.entity.User;
 import com.sky.exception.LoginFailedException;
@@ -10,14 +11,18 @@ import com.sky.mapper.UserMapper;
 import com.sky.properties.WeChatProperties;
 import com.sky.service.UserService;
 import com.sky.utils.HttpClientUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class UserServicelmpl implements UserService {
 
     private static final String URL = "https://api.weixin.qq.com/sns/jscode2session";
@@ -26,6 +31,8 @@ public class UserServicelmpl implements UserService {
     private WeChatProperties weChatProperties;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
     /**
      * 微信登录
      * @param userLoginDTO
@@ -65,7 +72,25 @@ public class UserServicelmpl implements UserService {
                     .createTime(LocalDateTime.now())
                     .build();
             userMapper.insert(user);
+
+            //实时更新新用户统计缓存
+            try {
+                LocalDate today = LocalDate.now();
+
+                // 1. 更新今日新增 (user:new:2026-02-24)
+                String dailyKey = RedisConstant.USER_NEW_KEY + today;
+                stringRedisTemplate.opsForValue().increment(dailyKey);
+
+                // 2. 更新全局总数 (user:total:current) —— 如果你决定保留这个Key的话
+                stringRedisTemplate.opsForValue().increment(RedisConstant.USER_TOTAL_CURRENT);
+
+            } catch (Exception e) {
+                // 捕获异常，防止因为 Redis 挂了导致用户无法注册（降级策略）
+                log.error("用户注册实时统计Redis失败", e);
+            }
+
         }
+
 
         return user;
 
