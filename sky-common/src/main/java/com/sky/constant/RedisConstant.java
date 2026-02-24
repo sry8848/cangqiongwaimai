@@ -7,4 +7,9 @@ public class RedisConstant {
     public static final String USER_TOTAL_KEY = "user:total:";
     // 全局当前总用户量 Key
     public static final String USER_TOTAL_CURRENT = "user:total:current";
+    
+    // 商品销量 ZSET Key 前缀，后面接日期：sales:2026-02-23
+    public static final String SALES_KEY = "sales:";
+    // 销量数据过期时间（天）
+    public static final long SALES_EXPIRE_DAYS = 90;
 }

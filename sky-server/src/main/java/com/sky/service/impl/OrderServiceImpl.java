@@ -35,6 +35,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -47,6 +48,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,6 +75,8 @@ public class OrderServiceImpl implements OrderService {
     private WebSocketServer webSocketServer;
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 用户下单
@@ -567,6 +571,21 @@ public class OrderServiceImpl implements OrderService {
         orders.setDeliveryTime(LocalDateTime.now());
 
         orderMapper.update(orders);
+
+        List<OrderDetail> orderDetails = orderDetailMapper.listByOrderId(id);
+        LocalDate orderDate = ordersDB.getOrderTime().toLocalDate();
+        String zsetKey = RedisConstant.SALES_KEY + orderDate;
+
+        for (OrderDetail detail : orderDetails) {
+            redisTemplate.opsForZSet().incrementScore(
+                zsetKey,
+                detail.getName(),
+                detail.getNumber()
+            );
+        }
+
+        redisTemplate.expire(zsetKey, RedisConstant.SALES_EXPIRE_DAYS, TimeUnit.DAYS);
+        log.info("订单完成，已更新商品销量 ZSET: {}", zsetKey);
     }
 
     /**

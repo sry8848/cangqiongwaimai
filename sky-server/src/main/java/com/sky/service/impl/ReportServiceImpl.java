@@ -16,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletOutputStream;
@@ -290,28 +291,91 @@ public class ReportServiceImpl implements ReportService {
     }
 
     /**
-     * 统计指定时间区间内的销量排名前10
-     * @param begin
-     * @param end
-     * @return
+     * 获取销量前10的统计报表
+     * 逻辑：优先从 Redis 的 ZSet 中通过多日并集运算获取，若 Redis 异常则降级查询数据库。
+     *
+     * @param begin 开始日期
+     * @param end   结束日期
+     * @return 包含商品名称列表和销量列表的 VO 对象
      */
     public SalesTop10ReportVO getSalesTop10(LocalDate begin, LocalDate end) {
+        // 1. 生成日期列表，用于拼接 Redis 的 Key
+        List<LocalDate> dateList = new ArrayList<>();
+        LocalDate tempDate = begin;
+        while (!tempDate.isAfter(end)) {
+            dateList.add(tempDate);
+            tempDate = tempDate.plusDays(1); // 逐日递增
+        }
+
+        // 2. 准备 Redis 临时 Key，用于存储多日聚合后的并集结果
+        // 使用时间戳防止并发请求下的 Key 冲突
+        String tempKey = "temp:top10:" + System.currentTimeMillis();
+        
+        // 3. 构建需要合并的所有每日销量 Key 列表 (例如: sales:2023-10-01, sales:2023-10-02...)
+        List<String> zsetKeys = dateList.stream()
+                .map(date -> RedisConstant.SALES_KEY + date)
+                .collect(Collectors.toList());
+
+        try {
+            // 4. 执行 ZSet 并集运算 (ZUNIONSTORE)
+            // 将 zsetKeys 中所有集合的 score（销量）累加，结果存入 tempKey
+            stringRedisTemplate.opsForZSet().unionAndStore(tempKey, zsetKeys, tempKey);
+
+            // 5. 从聚合后的有序集合中获取前 10 名
+            // reverseRangeWithScores 表示按 score 从大到小排序，取索引 0-9
+            Set<ZSetOperations.TypedTuple<String>> top10 =
+                    stringRedisTemplate.opsForZSet().reverseRangeWithScores(tempKey, 0, 9);
+
+            List<String> names = new ArrayList<>();
+            List<Integer> numbers = new ArrayList<>();
+
+            // 6. 解析并格式化结果
+            if (top10 != null && !top10.isEmpty()) {
+                for (ZSetOperations.TypedTuple<String> tuple : top10) {
+                    names.add(tuple.getValue());                  // 商品名称
+                    numbers.add(tuple.getScore().intValue());     // 累计销量
+                }
+            }
+
+            // 7. 返回封装后的数据，将 List 转换为逗号分隔的字符串（适配前端图表）
+            return SalesTop10ReportVO.builder()
+                    .nameList(StringUtils.join(names, ","))
+                    .numberList(StringUtils.join(numbers, ","))
+                    .build();
+
+        } catch (Exception e) {
+            // 8. 异常处理：如果 Redis 操作失败（如连接失败或超时），记录警告并执行数据库降级方案
+            log.warn("Redis ZSET 查询失败，降级到数据库查询: {}", e.getMessage());
+            return getSalesTop10FromDB(begin, end);
+        } finally {
+            // 9. 资源清理：无论成功或失败，必须删除 Redis 临时 Key 释放内存
+            stringRedisTemplate.delete(tempKey);
+        }
+    }
+
+    /**
+     * 数据库兜底查询逻辑：从订单表统计指定时间段内的销量前10
+     */
+    private SalesTop10ReportVO getSalesTop10FromDB(LocalDate begin, LocalDate end) {
+        // 将日期转换为当天的开始和结束时刻 (00:00:00.000 ~ 23:59:59.999)
         LocalDateTime beginTime = LocalDateTime.of(begin, LocalTime.MIN);
         LocalDateTime endTime = LocalDateTime.of(end, LocalTime.MAX);
 
+        // 调用 Mapper 执行 SQL 聚合查询 (GROUP BY 商品名 ORDER BY SUM(销量) DESC LIMIT 10)
         List<GoodsSalesDTO> salesTop10 = orderMapper.getSalesTop10(beginTime, endTime);
+        
+        // 提取名称列表
         List<String> names = salesTop10.stream().map(GoodsSalesDTO::getName).collect(Collectors.toList());
         String nameList = StringUtils.join(names, ",");
 
+        // 提取数量列表
         List<Integer> numbers = salesTop10.stream().map(GoodsSalesDTO::getNumber).collect(Collectors.toList());
         String numberList = StringUtils.join(numbers, ",");
 
-        //封装返回结果数据
-        return SalesTop10ReportVO
-                .builder()
+        // 封装并返回结果
+        return SalesTop10ReportVO.builder()
                 .nameList(nameList)
                 .numberList(numberList)
                 .build();
     }
-
 }
