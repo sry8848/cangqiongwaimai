@@ -6,6 +6,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
+import com.sky.constant.RedisConstant;
+import com.sky.constant.WebSocketConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.*;
 import com.sky.entity.*;
@@ -25,12 +27,15 @@ import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
+import com.sky.websocket.WebSocketServer;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,10 +43,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.beans.Transient;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,6 +71,12 @@ public class OrderServiceImpl implements OrderService {
     private String shopAddress;
     @Value("${sky.baidu.ak}")
     private String baiduAk;
+    @Autowired
+    private WebSocketServer webSocketServer;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 用户下单
@@ -126,6 +139,13 @@ public class OrderServiceImpl implements OrderService {
         String orderNumber = time + random;
         orders.setNumber(orderNumber);
         orderMapper.insert(orders);
+
+        // 【新增逻辑】下单成功后，立刻将订单ID发到10秒延迟队列
+        // 参数1: 正常交换机名称
+        // 参数2: 10秒队列的路由键
+        // 参数3: 要发送的消息内容（只发订单ID即可，越轻量越好）
+        log.info("订单 {} 提交成功，准备发送10秒延迟检测消息", orders.getId());
+        rabbitTemplate.convertAndSend("order.direct", "order.delay.10s", orders.getId());
 
         //创建详细订单信息列表
         List<OrderDetail> orderDetails = new ArrayList<>();
@@ -211,6 +231,21 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         orderMapper.update(orders);
+
+        //发送来单提醒
+        //构造订单消息json字符串
+        //构造消息map
+        Map map = new HashMap();
+        map.put("type", WebSocketConstant.NEW_ORDER );//订单类型，1-新订单
+        map.put("orderId", ordersDB.getId());
+        map.put("content", "订单号"+ordersDB.getNumber());
+
+        //转换为json字符串
+        String json = JSON.toJSONString(map);
+
+        //向广播交换机发送消息
+        log.info("【客户催单】将催单消息推送到 MQ 广播中心...");
+        rabbitTemplate.convertAndSend("websocket.fanout", "", json);
     }
 
     /**
@@ -508,6 +543,11 @@ public class OrderServiceImpl implements OrderService {
         orders.setStatus(Orders.DELIVERY_IN_PROGRESS);
 
         orderMapper.update(orders);
+
+        // 【新增逻辑】下单成功后，立刻将订单ID发到60分钟延迟队列
+        log.info("订单 {} 提交成功，准备发送60分钟延迟检测消息", orders.getId());
+        rabbitTemplate.convertAndSend("order.direct", "order.delay.60m", orders.getId());
+
     }
 
     /**
@@ -531,6 +571,21 @@ public class OrderServiceImpl implements OrderService {
         orders.setDeliveryTime(LocalDateTime.now());
 
         orderMapper.update(orders);
+
+        List<OrderDetail> orderDetails = orderDetailMapper.listByOrderId(id);
+        LocalDate orderDate = ordersDB.getOrderTime().toLocalDate();
+        String zsetKey = RedisConstant.SALES_KEY + orderDate;
+
+        for (OrderDetail detail : orderDetails) {
+            redisTemplate.opsForZSet().incrementScore(
+                zsetKey,
+                detail.getName(),
+                detail.getNumber()
+            );
+        }
+
+        redisTemplate.expire(zsetKey, RedisConstant.SALES_EXPIRE_DAYS, TimeUnit.DAYS);
+        log.info("订单完成，已更新商品销量 ZSET: {}", zsetKey);
     }
 
     /**
@@ -596,4 +651,36 @@ public class OrderServiceImpl implements OrderService {
         // 百度路线规划接口要求格式：lat,lng
         return lat + "," + lng;
     }
+
+    /**
+     * 用户催单
+     * @param id
+     */
+     public void reminder(Long id) {
+         // 根据id查询订单
+         Orders ordersDB = orderMapper.getById(id);
+
+         // 校验订单是否存在，并且状态为3
+         if (ordersDB == null || !ordersDB.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
+             throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+         }
+
+         //构建消息
+         Map map = new HashMap();
+         map.put("type", WebSocketConstant.ORDER_REMINDER);
+         map.put("orderId", id);
+         map.put("content", "订单号：" + ordersDB.getNumber());
+
+         //转换为json字符串
+         String json = JSON.toJSONString(map);
+
+         //原代码
+         //webSocketServer.sendToAllClient(json);
+         //直接发送难以面对多服务端架构
+
+
+         //【新架构代码】推送到 MQ 广播中心
+         log.info("【来单提醒】将新订单消息推送到 MQ 广播中心...");
+         rabbitTemplate.convertAndSend("websocket.fanout", "", json);
+     }
 }

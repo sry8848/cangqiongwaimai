@@ -1,0 +1,4987 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "分类相关接口"
+    },
+    {
+      "name": "员工相关接口"
+    },
+    {
+      "name": "套餐相关接口"
+    },
+    {
+      "name": "工作台接口"
+    },
+    {
+      "name": "店铺操作接口"
+    },
+    {
+      "name": "数据统计相关接口"
+    },
+    {
+      "name": "菜品相关接口"
+    },
+    {
+      "name": "订单管理接口"
+    },
+    {
+      "name": "通用接口"
+    }
+  ],
+  "paths": {
+    "/admin/category": {
+      "put": {
+        "summary": "修改分类",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "分类相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "分类id"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "分类名称"
+                  },
+                  "sort": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "排序"
+                  },
+                  "type": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "分类类型"
+                  }
+                },
+                "title": "CategoryDTO",
+                "$$ref": "#/definitions/CategoryDTO",
+                "required": [
+                  "id",
+                  "name",
+                  "sort",
+                  "type"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "新增分类",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "分类相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "分类名称"
+                  },
+                  "sort": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "排序，按照升序排序"
+                  },
+                  "type": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "分类类型：1为菜品分类，2为套餐分类"
+                  }
+                },
+                "title": "CategoryDTO",
+                "$$ref": "#/definitions/CategoryDTO",
+                "required": [
+                  "name",
+                  "sort",
+                  "type"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "根据id删除分类",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "分类相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "分类id",
+            "required": true,
+            "example": "100",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/category/page": {
+      "get": {
+        "summary": "分类分页查询",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "分类相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "分类名称",
+            "required": false,
+            "example": "传统主食",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页记录数",
+            "required": true,
+            "example": "10",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "分类类型：1为菜品分类，2为套餐分类",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "null"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "type": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "sort": {
+                                "type": "number"
+                              },
+                              "status": {
+                                "type": "number"
+                              },
+                              "createTime": {
+                                "type": "string"
+                              },
+                              "updateTime": {
+                                "type": "string"
+                              },
+                              "createUser": {
+                                "type": "number"
+                              },
+                              "updateUser": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "type",
+                              "name",
+                              "sort",
+                              "status",
+                              "createTime",
+                              "updateTime",
+                              "createUser",
+                              "updateUser"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/category/status/{status}": {
+      "post": {
+        "summary": "启用、禁用分类",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "分类相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "description": "1为启用，0为禁用",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "分类id",
+            "required": true,
+            "example": "100",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/category/list": {
+      "get": {
+        "summary": "根据类型查询分类",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "分类相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "分类类型：1为菜品分类，2为套餐分类",
+            "required": false,
+            "example": "2",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "createTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "createUser": {
+                            "type": "integer",
+                            "format": "int64"
+                          },
+                          "id": {
+                            "type": "integer",
+                            "format": "int64"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "sort": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "status": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "type": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "updateTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updateUser": {
+                            "type": "integer",
+                            "format": "int64"
+                          }
+                        },
+                        "title": "Category",
+                        "$$ref": "#/definitions/Category"
+                      }
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«List«Category»»",
+                  "$$ref": "#/definitions/R«List«Category»»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/employee/editPassword": {
+      "put": {
+        "summary": "修改密码",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "员工相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "empId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "员工id"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "description": "新密码"
+                  },
+                  "oldPassword": {
+                    "type": "string",
+                    "description": "旧密码"
+                  }
+                },
+                "title": "PasswordEditDTO",
+                "$$ref": "#/definitions/PasswordEditDTO",
+                "required": [
+                  "empId",
+                  "newPassword",
+                  "oldPassword"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/employee/status/{status}": {
+      "post": {
+        "summary": "启用、禁用员工账号",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "员工相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "description": "状态，1为启用 0为禁用",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "员工id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/employee/page": {
+      "get": {
+        "summary": "员工分页查询",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "员工相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "员工姓名",
+            "required": false,
+            "example": "张三",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页记录数",
+            "required": true,
+            "example": "10",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "null"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "username": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "password": {
+                                "type": "string"
+                              },
+                              "phone": {
+                                "type": "string"
+                              },
+                              "sex": {
+                                "type": "string"
+                              },
+                              "idNumber": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "number"
+                              },
+                              "createTime": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "updateTime": {
+                                "type": "string"
+                              },
+                              "createUser": {
+                                "type": "number",
+                                "nullable": true
+                              },
+                              "updateUser": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "username",
+                              "name",
+                              "password",
+                              "phone",
+                              "sex",
+                              "idNumber",
+                              "status",
+                              "createTime",
+                              "updateTime",
+                              "createUser",
+                              "updateUser"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/employee/login": {
+      "post": {
+        "summary": "员工登录",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "员工相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "description": "密码"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "用户名"
+                  }
+                },
+                "title": "EmployeeLoginDTO",
+                "description": "员工登录时传递的数据模型",
+                "$$ref": "#/definitions/EmployeeLoginDTO",
+                "required": [
+                  "password",
+                  "username"
+                ]
+              },
+              "example": {
+                "password": "123456",
+                "username": "admin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "主键值"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "姓名"
+                        },
+                        "token": {
+                          "type": "string",
+                          "description": "jwt令牌"
+                        },
+                        "userName": {
+                          "type": "string",
+                          "description": "用户名"
+                        }
+                      },
+                      "title": "EmployeeLoginVO",
+                      "description": "员工登录返回的数据格式",
+                      "$$ref": "#/definitions/EmployeeLoginVO"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«EmployeeLoginVO»",
+                  "$$ref": "#/definitions/R«EmployeeLoginVO»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/employee": {
+      "post": {
+        "summary": "新增员工",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "员工相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "员工id"
+                  },
+                  "idNumber": {
+                    "type": "string",
+                    "description": "身份证"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "姓名"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "手机号"
+                  },
+                  "sex": {
+                    "type": "string",
+                    "description": "性别"
+                  },
+                  "username": {
+                    "type": "string",
+                    "description": "用户名"
+                  }
+                },
+                "title": "EmployeeDTO",
+                "$$ref": "#/definitions/EmployeeDTO",
+                "required": [
+                  "idNumber",
+                  "name",
+                  "phone",
+                  "sex",
+                  "username"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R",
+                  "$$ref": "#/definitions/R",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "编辑员工信息",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "员工相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "idNumber": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "sex": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                },
+                "title": "EmployeeDTO",
+                "$$ref": "#/definitions/EmployeeDTO",
+                "required": [
+                  "id",
+                  "idNumber",
+                  "name",
+                  "phone",
+                  "sex",
+                  "username"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/employee/{id}": {
+      "get": {
+        "summary": "根据id查询员工",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "员工相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "员工id",
+            "required": true,
+            "example": "100",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "createTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "createUser": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "idNumber": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "password": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "sex": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "updateTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updateUser": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "username": {
+                          "type": "string"
+                        }
+                      },
+                      "title": "Employee",
+                      "$$ref": "#/definitions/Employee"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«Employee»",
+                  "$$ref": "#/definitions/R«Employee»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/employee/logout": {
+      "post": {
+        "summary": "退出登录",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "员工相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "empty object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/setmeal": {
+      "put": {
+        "summary": "修改套餐",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "套餐相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "categoryId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "分类id"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "套餐描述"
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "套餐id"
+                  },
+                  "image": {
+                    "type": "string",
+                    "description": "套餐图片路径"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "套餐名称"
+                  },
+                  "price": {
+                    "type": "number",
+                    "description": "套餐价格"
+                  },
+                  "setmealDishes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "copies": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "菜品份数"
+                        },
+                        "dishId": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "菜品id"
+                        },
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "关系表主键值"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "菜品名称"
+                        },
+                        "price": {
+                          "type": "number",
+                          "description": "菜品价格"
+                        },
+                        "setmealId": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "套餐id"
+                        }
+                      },
+                      "title": "SetmealDish",
+                      "$$ref": "#/definitions/SetmealDish",
+                      "required": [
+                        "copies",
+                        "dishId",
+                        "name",
+                        "price"
+                      ]
+                    },
+                    "description": "套餐和菜品关联关系"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "套餐起售状态"
+                  }
+                },
+                "title": "SetmealDTO",
+                "$$ref": "#/definitions/SetmealDTO",
+                "required": [
+                  "categoryId",
+                  "id",
+                  "image",
+                  "name",
+                  "price",
+                  "setmealDishes"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R",
+                  "$$ref": "#/definitions/R",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "批量删除套餐",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "套餐相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "ids",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R",
+                  "$$ref": "#/definitions/R"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "新增套餐",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "套餐相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "categoryId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "分类id"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "套餐描述"
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "套餐id"
+                  },
+                  "image": {
+                    "type": "string",
+                    "description": "套餐图片"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "套餐名称"
+                  },
+                  "price": {
+                    "type": "number",
+                    "description": "套餐价格"
+                  },
+                  "setmealDishes": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "copies": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "份数"
+                        },
+                        "dishId": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "菜品id"
+                        },
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "套餐和菜品关系id"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "菜品名称"
+                        },
+                        "price": {
+                          "type": "number",
+                          "description": "菜品价格"
+                        },
+                        "setmealId": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "套餐id"
+                        }
+                      },
+                      "title": "SetmealDish",
+                      "$$ref": "#/definitions/SetmealDish",
+                      "required": [
+                        "copies",
+                        "dishId",
+                        "name",
+                        "price",
+                        "setmealId"
+                      ]
+                    },
+                    "description": "套餐包含的菜品"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "套餐状态：1位起售 0为停售"
+                  }
+                },
+                "title": "SetmealDTO",
+                "$$ref": "#/definitions/SetmealDTO",
+                "required": [
+                  "categoryId",
+                  "image",
+                  "name",
+                  "price",
+                  "setmealDishes",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R",
+                  "$$ref": "#/definitions/R",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/setmeal/page": {
+      "get": {
+        "summary": "分页查询",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "套餐相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "分类id",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "套餐名称",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页记录数",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "套餐起售状态",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "null"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "categoryId": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "price": {
+                                "type": "number"
+                              },
+                              "status": {
+                                "type": "number"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "image": {
+                                "type": "string"
+                              },
+                              "updateTime": {
+                                "type": "string"
+                              },
+                              "categoryName": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "categoryId",
+                              "name",
+                              "price",
+                              "status",
+                              "description",
+                              "image",
+                              "updateTime",
+                              "categoryName"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/setmeal/status/{status}": {
+      "post": {
+        "summary": "套餐起售、停售",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "套餐相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "description": "套餐状态，1表示起售，0表示停售",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "套餐id",
+            "required": true,
+            "example": "101",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R",
+                  "$$ref": "#/definitions/R",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/setmeal/{id}": {
+      "get": {
+        "summary": "根据id查询套餐",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "套餐相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "套餐id",
+            "required": true,
+            "example": "101",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categoryId": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "categoryName": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "image": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "price": {
+                          "type": "number"
+                        },
+                        "setmealDishes": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "copies": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "dishId": {
+                                "type": "integer",
+                                "format": "int64"
+                              },
+                              "id": {
+                                "type": "integer",
+                                "format": "int64"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "price": {
+                                "type": "number"
+                              },
+                              "setmealId": {
+                                "type": "integer",
+                                "format": "int64"
+                              }
+                            },
+                            "title": "SetmealDish",
+                            "$$ref": "#/definitions/SetmealDish",
+                            "required": [
+                              "copies",
+                              "dishId",
+                              "id",
+                              "name",
+                              "price",
+                              "setmealId"
+                            ]
+                          }
+                        },
+                        "status": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "updateTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "title": "SetmealVO",
+                      "$$ref": "#/definitions/SetmealVO",
+                      "required": [
+                        "categoryId",
+                        "categoryName",
+                        "description",
+                        "id",
+                        "image",
+                        "name",
+                        "price",
+                        "setmealDishes",
+                        "status",
+                        "updateTime"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«SetmealVO»",
+                  "$$ref": "#/definitions/R«SetmealVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/workspace/businessData": {
+      "get": {
+        "summary": "查询今日运营数据",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "工作台接口"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "newUsers": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "新增用户数"
+                        },
+                        "orderCompletionRate": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "订单完成率"
+                        },
+                        "turnover": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "营业额"
+                        },
+                        "unitPrice": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "平均客单价"
+                        },
+                        "validOrderCount": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "有效订单数"
+                        }
+                      },
+                      "title": "BusinessDataVO",
+                      "$$ref": "#/definitions/BusinessDataVO",
+                      "required": [
+                        "newUsers",
+                        "orderCompletionRate",
+                        "turnover",
+                        "unitPrice",
+                        "validOrderCount"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«BusinessDataVO»",
+                  "$$ref": "#/definitions/R«BusinessDataVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/workspace/overviewSetmeals": {
+      "get": {
+        "summary": "查询套餐总览",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "工作台接口"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "discontinued": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "已停售套餐数量"
+                        },
+                        "sold": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "已启售套餐数量"
+                        }
+                      },
+                      "title": "SetmealOverViewVO",
+                      "$$ref": "#/definitions/SetmealOverViewVO",
+                      "required": [
+                        "discontinued",
+                        "sold"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«SetmealOverViewVO»",
+                  "$$ref": "#/definitions/R«SetmealOverViewVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/workspace/overviewDishes": {
+      "get": {
+        "summary": "查询菜品总览",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "工作台接口"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "discontinued": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "已停售菜品数量"
+                        },
+                        "sold": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "已启售菜品数量"
+                        }
+                      },
+                      "title": "DishOverViewVO",
+                      "$$ref": "#/definitions/DishOverViewVO",
+                      "required": [
+                        "discontinued",
+                        "sold"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«DishOverViewVO»",
+                  "$$ref": "#/definitions/R«DishOverViewVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/workspace/overviewOrders": {
+      "get": {
+        "summary": "查询订单管理数据",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "工作台接口"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "allOrders": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "全部订单"
+                        },
+                        "cancelledOrders": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "已取消数量"
+                        },
+                        "completedOrders": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "已完成数量"
+                        },
+                        "deliveredOrders": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "待派送数量"
+                        },
+                        "waitingOrders": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "待接单数量"
+                        }
+                      },
+                      "title": "OrderOverViewVO",
+                      "$$ref": "#/definitions/OrderOverViewVO",
+                      "required": [
+                        "allOrders",
+                        "cancelledOrders",
+                        "completedOrders",
+                        "deliveredOrders",
+                        "waitingOrders"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«OrderOverViewVO»",
+                  "$$ref": "#/definitions/R«OrderOverViewVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/shop/status": {
+      "get": {
+        "summary": "获取营业状态",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "店铺操作接口"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "店铺营业状态：1为营业，0为打烊"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«int»",
+                  "$$ref": "#/definitions/R«int»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/shop/{status}": {
+      "put": {
+        "summary": "设置营业状态",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "店铺操作接口"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "description": "店铺营业状态：1为营业，0为打烊",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/report/export": {
+      "get": {
+        "summary": "导出Excel报表接口",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据统计相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/report/top10": {
+      "get": {
+        "summary": "查询销量排名top10接口",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据统计相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "begin",
+            "in": "query",
+            "description": "开始日期",
+            "required": true,
+            "example": "2022-05-01",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "结束日期",
+            "required": true,
+            "example": "2022-05-31",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "nameList": {
+                          "type": "string",
+                          "description": "商品名称列表，以逗号分隔"
+                        },
+                        "numberList": {
+                          "type": "string",
+                          "description": "销量列表，以逗号分隔"
+                        }
+                      },
+                      "title": "SalesTop10ReportVO",
+                      "$$ref": "#/definitions/SalesTop10ReportVO",
+                      "required": [
+                        "nameList",
+                        "numberList"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«SalesTop10ReportVO»",
+                  "$$ref": "#/definitions/R«SalesTop10ReportVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/report/userStatistics": {
+      "get": {
+        "summary": "用户统计接口",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据统计相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "begin",
+            "in": "query",
+            "description": "开始日期",
+            "required": true,
+            "example": "2022-05-01",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "结束日期",
+            "required": true,
+            "example": "2022-05-31",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dateList": {
+                          "type": "string",
+                          "description": "日期列表，以逗号分隔"
+                        },
+                        "newUserList": {
+                          "type": "string",
+                          "description": "新增用户数列表，以逗号分隔"
+                        },
+                        "totalUserList": {
+                          "type": "string",
+                          "description": "总用户量列表，以逗号分隔"
+                        }
+                      },
+                      "title": "UserReportVO",
+                      "$$ref": "#/definitions/UserReportVO",
+                      "required": [
+                        "dateList",
+                        "newUserList",
+                        "totalUserList"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«UserReportVO»",
+                  "$$ref": "#/definitions/R«UserReportVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/report/turnoverStatistics": {
+      "get": {
+        "summary": "营业额统计接口",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据统计相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "begin",
+            "in": "query",
+            "description": "开始日期",
+            "required": true,
+            "example": "2022-05-01",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "结束日期",
+            "required": true,
+            "example": "2022-05-31",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dateList": {
+                          "type": "string",
+                          "description": "日期列表，日期之间以逗号分隔"
+                        },
+                        "turnoverList": {
+                          "type": "string",
+                          "description": "营业额列表，营业额之间以逗号分隔"
+                        }
+                      },
+                      "title": "TurnoverReportVO",
+                      "$$ref": "#/definitions/TurnoverReportVO",
+                      "required": [
+                        "dateList",
+                        "turnoverList"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«TurnoverReportVO»",
+                  "$$ref": "#/definitions/R«TurnoverReportVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/report/ordersStatistics": {
+      "get": {
+        "summary": "订单统计接口",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "数据统计相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "begin",
+            "in": "query",
+            "description": "开始日期",
+            "required": true,
+            "example": "2022-05-01",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "description": "结束日期",
+            "required": true,
+            "example": "2022-05-31",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "dateList": {
+                          "type": "string",
+                          "description": "日期列表，以逗号分隔"
+                        },
+                        "orderCompletionRate": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "订单完成率"
+                        },
+                        "orderCountList": {
+                          "type": "string",
+                          "description": "订单数列表，以逗号分隔"
+                        },
+                        "totalOrderCount": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "订单总数"
+                        },
+                        "validOrderCount": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "有效订单数"
+                        },
+                        "validOrderCountList": {
+                          "type": "string",
+                          "description": "有效订单数列表，以逗号分隔"
+                        }
+                      },
+                      "title": "OrderReportVO",
+                      "$$ref": "#/definitions/OrderReportVO",
+                      "required": [
+                        "dateList",
+                        "orderCompletionRate",
+                        "orderCountList",
+                        "totalOrderCount",
+                        "validOrderCount",
+                        "validOrderCountList"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«OrderReportVO»",
+                  "$$ref": "#/definitions/R«OrderReportVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/dish": {
+      "put": {
+        "summary": "修改菜品",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "菜品相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "categoryId": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "flavors": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "dishId": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "title": "DishFlavor",
+                      "$$ref": "#/definitions/DishFlavor",
+                      "required": [
+                        "name",
+                        "value"
+                      ]
+                    }
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "image": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "title": "DishDTO",
+                "$$ref": "#/definitions/DishDTO",
+                "required": [
+                  "categoryId",
+                  "id",
+                  "image",
+                  "name",
+                  "price"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "批量删除菜品",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "菜品相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "菜品id，之间用逗号分隔",
+            "required": true,
+            "example": "1,2,3",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "新增菜品",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "菜品相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "categoryId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "分类id"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "菜品描述"
+                  },
+                  "flavors": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "dishId": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "菜品id"
+                        },
+                        "id": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "口味id"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "口味名称"
+                        },
+                        "value": {
+                          "type": "string",
+                          "description": "口味值"
+                        }
+                      },
+                      "title": "DishFlavor",
+                      "$$ref": "#/definitions/DishFlavor",
+                      "required": [
+                        "name",
+                        "value"
+                      ]
+                    },
+                    "description": "口味"
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "菜品id"
+                  },
+                  "image": {
+                    "type": "string",
+                    "description": "菜品图片路径"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "菜品名称"
+                  },
+                  "price": {
+                    "type": "number",
+                    "description": "菜品价格"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "菜品状态：1为起售，0为停售"
+                  }
+                },
+                "title": "DishDTO",
+                "$$ref": "#/definitions/DishDTO",
+                "required": [
+                  "categoryId",
+                  "image",
+                  "name",
+                  "price"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/dish/{id}": {
+      "get": {
+        "summary": "根据id查询菜品",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "菜品相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "菜品id",
+            "required": true,
+            "example": "101",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categoryId": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "categoryName": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "flavors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "dishId": {
+                                "type": "integer",
+                                "format": "int64"
+                              },
+                              "id": {
+                                "type": "integer",
+                                "format": "int64"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "title": "DishFlavor",
+                            "$$ref": "#/definitions/DishFlavor",
+                            "required": [
+                              "dishId",
+                              "id",
+                              "name",
+                              "value"
+                            ]
+                          }
+                        },
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "image": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "price": {
+                          "type": "number"
+                        },
+                        "status": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "updateTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      },
+                      "title": "DishVO",
+                      "$$ref": "#/definitions/DishVO",
+                      "required": [
+                        "categoryId",
+                        "categoryName",
+                        "flavors",
+                        "description",
+                        "id",
+                        "image",
+                        "name",
+                        "price",
+                        "status",
+                        "updateTime"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«DishVO»",
+                  "$$ref": "#/definitions/R«DishVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/dish/list": {
+      "get": {
+        "summary": "根据分类id查询菜品",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "菜品相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "分类id",
+            "required": true,
+            "example": "101",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "categoryId": {
+                            "type": "integer",
+                            "format": "int64"
+                          },
+                          "createTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "createUser": {
+                            "type": "integer",
+                            "format": "int64"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "integer",
+                            "format": "int64"
+                          },
+                          "image": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "number"
+                          },
+                          "status": {
+                            "type": "integer",
+                            "format": "int32"
+                          },
+                          "updateTime": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updateUser": {
+                            "type": "integer",
+                            "format": "int64"
+                          }
+                        },
+                        "title": "Dish",
+                        "$$ref": "#/definitions/Dish"
+                      }
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«List«Dish»»",
+                  "$$ref": "#/definitions/R«List«Dish»»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/dish/page": {
+      "get": {
+        "summary": "菜品分页查询",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "菜品相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "分类id",
+            "required": false,
+            "example": "101",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "菜品名称",
+            "required": false,
+            "example": "宫保鸡丁",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "页码",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "每页记录数",
+            "required": true,
+            "example": "10",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "分类状态",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "null"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number",
+                          "description": "总记录数"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "categoryId": {
+                                "type": "number"
+                              },
+                              "price": {
+                                "type": "number"
+                              },
+                              "image": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "number"
+                              },
+                              "updateTime": {
+                                "type": "string"
+                              },
+                              "categoryName": {
+                                "type": "string",
+                                "description": "分类名称"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "name",
+                              "categoryId",
+                              "price",
+                              "image",
+                              "description",
+                              "status",
+                              "updateTime",
+                              "categoryName"
+                            ]
+                          },
+                          "description": "当前页数据"
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "records"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/dish/status/{status}": {
+      "post": {
+        "summary": "菜品起售、停售",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "菜品相关接口"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "description": "菜品状态：1为起售，0为停售",
+            "required": true,
+            "example": "1",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "菜品id",
+            "required": true,
+            "example": "101",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/order/cancel": {
+      "put": {
+        "summary": "取消订单",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "订单管理接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cancelReason": {
+                    "type": "string",
+                    "description": "订单取消原因"
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "订单id"
+                  }
+                },
+                "title": "OrdersCancelDTO",
+                "$$ref": "#/definitions/OrdersCancelDTO",
+                "required": [
+                  "cancelReason",
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R",
+                  "$$ref": "#/definitions/R",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/order/statistics": {
+      "get": {
+        "summary": "各个状态的订单数量统计",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "订单管理接口"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "confirmed": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "待派送数量"
+                        },
+                        "deliveryInProgress": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "派送中数量"
+                        },
+                        "toBeConfirmed": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "待接单数量"
+                        }
+                      },
+                      "title": "OrderStatisticsVO",
+                      "$$ref": "#/definitions/OrderStatisticsVO",
+                      "required": [
+                        "confirmed",
+                        "deliveryInProgress",
+                        "toBeConfirmed"
+                      ]
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«OrderStatisticsVO»",
+                  "$$ref": "#/definitions/R«OrderStatisticsVO»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/order/complete/{id}": {
+      "put": {
+        "summary": "完成订单",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "订单管理接口"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "订单id",
+            "required": true,
+            "example": "101",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R",
+                  "$$ref": "#/definitions/R",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/order/rejection": {
+      "put": {
+        "summary": "拒单",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "订单管理接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "订单id"
+                  },
+                  "rejectionReason": {
+                    "type": "string",
+                    "description": "拒单原因"
+                  }
+                },
+                "title": "OrdersRejectionDTO",
+                "$$ref": "#/definitions/OrdersRejectionDTO",
+                "required": [
+                  "id",
+                  "rejectionReason"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R",
+                  "$$ref": "#/definitions/R",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/order/confirm": {
+      "put": {
+        "summary": "接单",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "订单管理接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "application/json",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "订单id"
+                  }
+                },
+                "title": "OrdersConfirmDTO",
+                "$$ref": "#/definitions/OrdersConfirmDTO",
+                "required": [
+                  "id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R",
+                  "$$ref": "#/definitions/R",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/order/details/{id}": {
+      "get": {
+        "summary": "查询订单详情",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "订单管理接口"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "订单id",
+            "required": true,
+            "example": "101",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "address": {
+                          "type": "string"
+                        },
+                        "addressBookId": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "amount": {
+                          "type": "number"
+                        },
+                        "cancelReason": {
+                          "type": "string"
+                        },
+                        "cancelTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "checkoutTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "consignee": {
+                          "type": "string"
+                        },
+                        "deliveryStatus": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "deliveryTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "estimatedDeliveryTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "number": {
+                          "type": "string"
+                        },
+                        "orderDetailList": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "amount": {
+                                "type": "number"
+                              },
+                              "dishFlavor": {
+                                "type": "string"
+                              },
+                              "dishId": {
+                                "type": "integer",
+                                "format": "int64"
+                              },
+                              "id": {
+                                "type": "integer",
+                                "format": "int64"
+                              },
+                              "image": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "number": {
+                                "type": "integer",
+                                "format": "int32"
+                              },
+                              "orderId": {
+                                "type": "integer",
+                                "format": "int64"
+                              },
+                              "setmealId": {
+                                "type": "integer",
+                                "format": "int64"
+                              }
+                            },
+                            "title": "OrderDetail",
+                            "$$ref": "#/definitions/OrderDetail"
+                          }
+                        },
+                        "orderDishes": {
+                          "type": "string"
+                        },
+                        "orderTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "packAmount": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "payMethod": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "payStatus": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "rejectionReason": {
+                          "type": "string"
+                        },
+                        "remark": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tablewareNumber": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "tablewareStatus": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "userId": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "userName": {
+                          "type": "string"
+                        }
+                      },
+                      "title": "OrderVO",
+                      "$$ref": "#/definitions/OrderVO"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«OrderVO»",
+                  "$$ref": "#/definitions/R«OrderVO»",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/order/delivery/{id}": {
+      "put": {
+        "summary": "派送订单",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "订单管理接口"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "订单id",
+            "required": true,
+            "example": "101",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R",
+                  "$$ref": "#/definitions/R",
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/order/conditionSearch": {
+      "get": {
+        "summary": "订单搜索",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "订单管理接口"
+        ],
+        "parameters": [
+          {
+            "name": "beginTime",
+            "in": "query",
+            "description": "beginTime",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "description": "endTime",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "number",
+            "in": "query",
+            "description": "number",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "pageSize",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "phone",
+            "in": "query",
+            "description": "phone",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "msg": {
+                      "type": "null"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "number"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "number": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "number"
+                              },
+                              "userId": {
+                                "type": "number"
+                              },
+                              "addressBookId": {
+                                "type": "number"
+                              },
+                              "orderTime": {
+                                "type": "string"
+                              },
+                              "checkoutTime": {
+                                "type": "null",
+                                "nullable": true
+                              },
+                              "payMethod": {
+                                "type": "number"
+                              },
+                              "payStatus": {
+                                "type": "number"
+                              },
+                              "amount": {
+                                "type": "number"
+                              },
+                              "remark": {
+                                "type": "string"
+                              },
+                              "userName": {
+                                "type": "string"
+                              },
+                              "phone": {
+                                "type": "string"
+                              },
+                              "address": {
+                                "type": "string"
+                              },
+                              "consignee": {
+                                "type": "string"
+                              },
+                              "cancelReason": {
+                                "type": "string"
+                              },
+                              "rejectionReason": {
+                                "type": "string"
+                              },
+                              "cancelTime": {
+                                "type": "string"
+                              },
+                              "estimatedDeliveryTime": {
+                                "type": "string"
+                              },
+                              "deliveryStatus": {
+                                "type": "number"
+                              },
+                              "deliveryTime": {
+                                "type": "string"
+                              },
+                              "packAmount": {
+                                "type": "number"
+                              },
+                              "tablewareNumber": {
+                                "type": "number"
+                              },
+                              "tablewareStatus": {
+                                "type": "number"
+                              },
+                              "orderDishes": {
+                                "type": "string",
+                                "description": "订单包含的菜品，以字符串形式展示"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "number",
+                              "status",
+                              "userId",
+                              "addressBookId",
+                              "orderTime",
+                              "checkoutTime",
+                              "payMethod",
+                              "payStatus",
+                              "amount",
+                              "remark",
+                              "userName",
+                              "phone",
+                              "address",
+                              "consignee",
+                              "cancelReason",
+                              "rejectionReason",
+                              "cancelTime",
+                              "estimatedDeliveryTime",
+                              "deliveryStatus",
+                              "deliveryTime",
+                              "packAmount",
+                              "tablewareNumber",
+                              "tablewareStatus",
+                              "orderDishes"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/common/upload": {
+      "post": {
+        "summary": "文件上传",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "通用接口"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "multipart/form-data",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "description": "",
+            "example": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY",
+            "schema": {
+              "type": "string",
+              "default": "eyJhbGciOiJIUzI1NiJ9.eyJlbXBJZCI6MSwiZXhwIjoxOTQ0NDAzMTQwfQ.3uIqSZOPa0fIRdAvzes9uoc2BY4r4qjjsdxopwCCCpY"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "description": "文件",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "data": {
+                      "type": "string",
+                      "description": "文件上传路径"
+                    },
+                    "msg": {
+                      "type": "string"
+                    }
+                  },
+                  "title": "R«string»",
+                  "$$ref": "#/definitions/R«string»",
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}
