@@ -85,6 +85,13 @@ public interface OrderMapper {
     Integer countByMap(Map map);
 
     /**
+     * 根据条件统计订单金额总和
+     * @param map
+     * @return
+     */
+    Double sumByMap(Map map);
+
+    /**
      * 查询商品销售排名前10的商品
      * @param begin
      * @param end

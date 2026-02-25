@@ -8,6 +8,7 @@ import com.sky.dto.GoodsSalesDTO;
 import com.sky.entity.Orders;
 import com.sky.mapper.OrderMapper;
 import com.sky.mapper.UserMapper;
+import com.sky.service.WorkspaceService;
 import com.sky.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -43,6 +44,8 @@ public class ReportServiceImpl implements ReportService {
     private RedisTemplate redisTemplate;
     @Autowired
     private RedisTemplate<String, String> stringRedisTemplate;
+    @Autowired
+    private WorkspaceService workspaceService;
 
     /**
      * 统计指定时间区间内的营业额数据
@@ -377,5 +380,93 @@ public class ReportServiceImpl implements ReportService {
                 .nameList(nameList)
                 .numberList(numberList)
                 .build();
+    }
+
+    /**
+     * 导出运营数据报表
+     * @param response
+     */
+    @Override
+    public void exportBusinessData(HttpServletResponse response) {
+        // 1. 计算数据范围（最近30天）
+        LocalDate dateBegin = LocalDate.now().minusDays(30);
+        LocalDate dateEnd = LocalDate.now().minusDays(1);
+
+        
+        // 2. 获取概览数据
+        BusinessDataVO businessDataVO = workspaceService.getBusinessData(
+                LocalDateTime.of(dateBegin, LocalTime.MIN),
+                LocalDateTime.of(dateEnd, LocalTime.MAX)
+        );
+
+        try(
+        // 3. 读取 Excel 模板
+        // 从类路径加载 Excel 模板文件（确保模板文件在 resources/template 目录下）
+        // 类路径（classpath）是指项目编译后的类文件所在的目录，通常是 target/classes 或 build/classes。
+        // 模板文件（运营数据报表模板.xlsx）位于 resources/template 目录下，因此需要通过类路径加载。
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream("template/运营数据报表模板.xlsx");
+
+        // 4. 填充数据到 Excel 模板
+        // 4.1 创建 Excel 工作簿
+        XSSFWorkbook excel = new XSSFWorkbook(in);
+        ){
+
+            // 4.2 获取工作表（Sheet1）
+            XSSFSheet sheet = excel.getSheet("Sheet1");
+
+            // 4.3 填充时间范围
+            sheet.getRow(1).getCell(1).setCellValue("时间：" + dateBegin + "至" + dateEnd);
+
+            // 4.4 填充概览数据
+            XSSFRow row = sheet.getRow(3);
+            row.getCell(2).setCellValue(businessDataVO.getTurnover());
+            row.getCell(4).setCellValue(businessDataVO.getOrderCompletionRate());
+            row.getCell(6).setCellValue(businessDataVO.getNewUsers());
+
+            row = sheet.getRow(4);
+            row.getCell(2).setCellValue(businessDataVO.getValidOrderCount());
+            row.getCell(4).setCellValue(businessDataVO.getUnitPrice());
+
+            // 4.5 填充每日数据
+            for (int i = 0; i < 30; i++) {
+                LocalDate date = dateBegin.plusDays(i);
+                BusinessDataVO businessData = workspaceService.getBusinessData(
+                        LocalDateTime.of(date, LocalTime.MIN),
+                        LocalDateTime.of(date, LocalTime.MAX)
+                );
+
+                row = sheet.getRow(7 + i);
+                row.getCell(1).setCellValue(date.toString());
+                row.getCell(2).setCellValue(businessData.getTurnover());
+                row.getCell(3).setCellValue(businessData.getValidOrderCount());
+                row.getCell(4).setCellValue(businessData.getOrderCompletionRate());
+                row.getCell(5).setCellValue(businessData.getUnitPrice());
+                row.getCell(6).setCellValue(businessData.getNewUsers());
+            }
+
+            // 4.6 填充每日数据
+            for (int i = 0; i < 30; i++) {
+                LocalDate date = dateBegin.plusDays(i);
+                BusinessDataVO businessData = workspaceService.getBusinessData(
+                        LocalDateTime.of(date, LocalTime.MIN),
+                        LocalDateTime.of(date, LocalTime.MAX)
+                );
+
+                row = sheet.getRow(7 + i);
+                row.getCell(1).setCellValue(date.toString());
+                row.getCell(2).setCellValue(businessData.getTurnover());
+                row.getCell(3).setCellValue(businessData.getValidOrderCount());
+                row.getCell(4).setCellValue(businessData.getOrderCompletionRate());
+                row.getCell(5).setCellValue(businessData.getUnitPrice());
+                row.getCell(6).setCellValue(businessData.getNewUsers());
+            }
+            
+            // 5. 输出 Excel 文件到响应流
+            ServletOutputStream out = response.getOutputStream();
+            excel.write(out);
+
+        } catch (IOException e) {
+            log.error("导出运营数据报表失败", e);
+        }
     }
 }
